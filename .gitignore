@@ -18,3 +18,16 @@ export/*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+example_mods/yourself/characters/bf-cooler.json
+example_mods/yourself/characters/readme.txt
+example_mods/yourself/characters/sad.json
+example_mods/yourself/data/eye-to-eye/eye-to-eye-hard.json
+example_mods/yourself/data/eye-to-eye/script.lua
+example_mods/yourself/images/characters/BOYFRIEND-cooler.png
+example_mods/yourself/images/characters/BOYFRIEND-cooler.xml
+example_mods/yourself/images/characters/readme.txt
+example_mods/yourself/images/characters/sad.png
+example_mods/yourself/images/characters/sad.xml
+example_mods/yourself/songs/eye-to-eye/Inst.ogg
+example_mods/yourself/songs/eye-to-eye/Voices.ogg
+example_mods/yourself/weeks/weekchristmas.json
