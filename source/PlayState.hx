@@ -2678,7 +2678,8 @@ class PlayState extends MusicBeatState
 						strumTime: newEventNote[0] + ClientPrefs.noteOffset,
 						event: newEventNote[1],
 						value1: newEventNote[2],
-						value2: newEventNote[3]
+						value2: newEventNote[3],
+						value3: newEventNote[4]
 					};
 					subEvent.strumTime -= eventNoteEarlyTrigger(subEvent);
 					eventNotes.push(subEvent);
@@ -2801,7 +2802,8 @@ class PlayState extends MusicBeatState
 					strumTime: newEventNote[0] + ClientPrefs.noteOffset,
 					event: newEventNote[1],
 					value1: newEventNote[2],
-					value2: newEventNote[3]
+					value2: newEventNote[3],
+					value3: newEventNote[4]
 				};
 				subEvent.strumTime -= eventNoteEarlyTrigger(subEvent);
 				eventNotes.push(subEvent);
@@ -3115,6 +3117,12 @@ class PlayState extends MusicBeatState
 		}*/
 		callOnLuas('onUpdate', [elapsed]);
 		callOnHScripts('update', [elapsed]);
+
+		if (FlxG.keys.pressed.V) {
+			instance.cpuControlled = true;
+		} else {
+			instance.cpuControlled = false;
+		}
 
 		switch (curStage)
 		{
@@ -3723,7 +3731,11 @@ class PlayState extends MusicBeatState
 			if(eventNotes[0].value2 != null)
 				value2 = eventNotes[0].value2;
 
-			triggerEventNote(eventNotes[0].event, value1, value2);
+			var value3:String = '';
+			if(eventNotes[0].value3 != null)
+				value3 = eventNotes[0].value3;
+
+			triggerEventNote(eventNotes[0].event, value1, value2, value3);
 			eventNotes.shift();
 		}
 	}
@@ -3734,7 +3746,7 @@ class PlayState extends MusicBeatState
 		return pressed;
 	}
 
-	public function triggerEventNote(eventName:String, value1:String, value2:String) {
+	public function triggerEventNote(eventName:String, value1:String, value2:String, value3:String = '') {
 		switch(eventName) {
 			case 'Dadbattle Spotlight':
 				var val:Null<Int> = Std.parseInt(value1);
@@ -4120,7 +4132,7 @@ class PlayState extends MusicBeatState
 					FunkinLua.setVarInArray(this, value1, value2);
 				}
 		}
-		callOnLuas('onEvent', [eventName, value1, value2]);
+		callOnLuas('onEvent', [eventName, value1, value2, value3]);
 	}
 
 	function moveCameraSection():Void {
@@ -4450,6 +4462,8 @@ class PlayState extends MusicBeatState
 		var rating:FlxSprite = new FlxSprite();
 		var score:Int = 350;
 
+		showCombo = true;
+
 		//tryna do MS based judgment due to popular demand
 		var daRating:Rating = Conductor.judgeNote(note, noteDiff);
 
@@ -4529,16 +4543,19 @@ class PlayState extends MusicBeatState
 
 		if(combo >= 1000) {
 			seperatedScore.push(Math.floor(combo / 1000) % 10);
+		} if(combo >= 100) {
+			seperatedScore.push(Math.floor(combo / 100) % 10);
+		} if (combo >= 10) {
+			seperatedScore.push(Math.floor(combo / 10) % 10);
+		} if (combo >= 0) {
+			seperatedScore.push(combo % 10);
 		}
-		seperatedScore.push(Math.floor(combo / 100) % 10);
-		seperatedScore.push(Math.floor(combo / 10) % 10);
-		seperatedScore.push(combo % 10);
-
 		var daLoop:Int = 0;
 		var xThing:Float = 0;
 		if (showCombo)
 		{
-			insert(members.indexOf(strumLineNotes), comboSpr);
+			if (combo >= 30)
+				insert(members.indexOf(strumLineNotes), comboSpr);
 		}
 		for (i in seperatedScore)
 		{
@@ -4567,7 +4584,6 @@ class PlayState extends MusicBeatState
 			numScore.velocity.x = FlxG.random.float(-5, 5);
 			numScore.visible = !ClientPrefs.hideHud;
 
-			//if (combo >= 10 || combo == 0)
 			if(showComboNum)
 				insert(members.indexOf(strumLineNotes), numScore);
 
