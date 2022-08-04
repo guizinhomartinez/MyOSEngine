@@ -63,15 +63,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		/*
-		var option:Option = new Option('Character Trail',
-			'If checked, adds trail behind character like in thorns',
-			'characterTrail',				shit lol. i made better finally
-			'bool',
-			false);
-		addOption(option);
-		*/
-
 		var option:Option = new Option('Hide Score Text',
 			'If checked, hides score, accuracy and misses text under health bar in song',
 			'hideScoreText',
@@ -85,6 +76,14 @@ class VisualsUISubState extends BaseOptionsMenu
 			'string',
 			'OS',
 			['OS', 'Classic']);
+		addOption(option);
+
+		var option:Option = new Option('Score Type',
+			'Classic is Vanilla FnF score text, new is OS Engine score text',
+			'scoreTxtType',
+			'string',
+			'New Score',
+			['New Score', 'Classic']);
 		addOption(option);
 
 		var option:Option = new Option('Score Text Position',
@@ -109,7 +108,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'timeBarType',
 			'string',
 			'Time Left',
-			['Time Left', 'Time Elapsed', 'Song Name', 'OS Time Left', 'Disabled']);
+			['Cool Time Bar', 'Time Left', 'Time Elapsed', 'Song Name', 'OS Time Left', 'Disabled']);
 		addOption(option);
 
 		var option:Option = new Option('Flashing Lights',

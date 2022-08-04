@@ -1342,10 +1342,13 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "cameraSetTarget", function(target:String) {
 			var isDad:Bool = false;
+			var isGF:Bool = false;
 			if(target == 'dad') {
 				isDad = true;
+			} if(target=='gf'){
+				isGF = true;
 			}
-			PlayState.instance.moveCamera(isDad);
+			PlayState.instance.moveCamera(isDad, isGF);
 			return isDad;
 		});
 		Lua_helper.add_callback(lua, "cameraShake", function(camera:String, intensity:Float, duration:Float) {
