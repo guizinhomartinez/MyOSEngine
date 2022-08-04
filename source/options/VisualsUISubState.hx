@@ -70,7 +70,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		var option:Option = new Option('Icon Bop',
+		var option:Option = new Option('Icon Bop:',
 			'Classic is Vanilla FnF icons bops, OS is OS Engine icons bops',
 			'iconbops',
 			'string',
@@ -78,7 +78,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			['OS', 'Classic']);
 		addOption(option);
 
-		var option:Option = new Option('Score Type',
+		var option:Option = new Option('Score Type:',
 			'Classic is Vanilla FnF score text, new is OS Engine score text',
 			'scoreTxtType',
 			'string',
@@ -86,15 +86,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			['New Score', 'Classic']);
 		addOption(option);
 
-		var option:Option = new Option('Score Text Position',
-			'Classic is Psych Engine position, New is OS Engine position',
-			'scoreposition',
-			'string',
-			'Classic',
-			['Classic', 'New']);
-		addOption(option);
-
-		var option:Option = new Option('Colorblind Filter',
+		var option:Option = new Option('Colorblind Filter:',
 			'You can set colorblind filter (makes the game more playable for colorblind people)',
 			'colorblindMode',
 			'string',
