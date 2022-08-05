@@ -164,6 +164,11 @@ class Rating
 	public var ratingMod:Float = 1;
 	public var score:Int = 500;
 	public var noteSplash:Bool = true;
+	public var perfect:Bool = true;
+	public var sick:Bool = false;
+	public var good:Bool = false;
+	public var bad:Bool = false;
+	public var shit:Bool = false;
 
 	public function new(name:String)
 	{

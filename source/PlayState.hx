@@ -213,6 +213,12 @@ class PlayState extends MusicBeatState
 
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
+	public var perfectsTxt:FlxText;
+	public var sicksTxt:FlxText;
+	public var goodsTxt:FlxText;
+	public var badsTxt:FlxText;
+	public var shitsTxt:FlxText;
+	public var comboTxt:FlxText;
 
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
@@ -283,6 +289,20 @@ class PlayState extends MusicBeatState
 
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
+
+	var perfectTween:FlxTween;
+	var sickTween:FlxTween;
+	var goodTween:FlxTween;
+	var badTween:FlxTween;
+	var shitTween:FlxTween;
+	var comboTween:FlxTween;
+
+	var perfectColorTween:FlxTween;
+	var sickColorTween:FlxTween;
+	var goodColorTween:FlxTween;
+	var badColorTween:FlxTween;
+	var shitColorTween:FlxTween;
+	var comboColorTween:FlxTween;
 
 	var msTimeTxt:FlxText;
 	var msTimeTxtTween:FlxTween;
@@ -365,7 +385,7 @@ class PlayState extends MusicBeatState
 				['AA', 0.8], //From 70% to 79%
 				['AAA', 0.9], //From 80% to 89%
 				['AAAA', 1], //From 90% to 99%
-				['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+				['AAAAA', 1] //The value on this one isn't used actually, since Perfect is always "1"
 			];
 		}
 
@@ -389,24 +409,31 @@ class PlayState extends MusicBeatState
 		var rating:Rating = new Rating('sick');
 		rating.ratingMod = 1;
 		rating.score = 350;
+		rating.perfect = false;
+		rating.sick = true;
 		rating.noteSplash = true;
 		ratingsData.push(rating);
 
 		var rating:Rating = new Rating('good');
 		rating.ratingMod = 0.7;
 		rating.score = 200;
+		rating.perfect = false;
+		rating.good = true;
 		rating.noteSplash = false;
 		ratingsData.push(rating);
 
 		var rating:Rating = new Rating('bad');
 		rating.ratingMod = 0.4;
 		rating.score = 100;
+		rating.perfect = false;
+		rating.bad = true;
 		rating.noteSplash = false;
 		ratingsData.push(rating);
 
 		var rating:Rating = new Rating('shit');
 		rating.ratingMod = 0;
 		rating.score = 50;
+		rating.shit = true;
 		rating.noteSplash = false;
 		ratingsData.push(rating);
 
@@ -1334,7 +1361,7 @@ class PlayState extends MusicBeatState
 		songTxt = new FlxText(12, FlxG.height - 24, 0, "", 8);
 		songTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		songTxt.scrollFactor.set();
-		songTxt.borderSize = 1;
+		songTxt.borderSize = 1.25;
 		if (!ClientPrefs.hideWatermark && !ClientPrefs.hideHud) {
 			songTxt.visible = true;
 		} else {
@@ -1351,6 +1378,42 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) {
 			botplayTxt.y = timeBarBG.y - 78;
 		}
+
+		perfectsTxt = new FlxText(12, FlxG.height/2, 0, "", 20);
+		perfectsTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		perfectsTxt.scrollFactor.set();
+		perfectsTxt.borderSize = 1.25;
+		if(!ClientPrefs.removePerfects) add(perfectsTxt);
+
+		sicksTxt = new FlxText(perfectsTxt.x, (!ClientPrefs.removePerfects ? perfectsTxt.y + 20 : FlxG.height/2), 0, "", 20);
+		sicksTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		sicksTxt.scrollFactor.set();
+		sicksTxt.borderSize = 1.25;
+		add(sicksTxt);
+
+		goodsTxt = new FlxText(sicksTxt.x, sicksTxt.y + 20, 0, "", 20);
+		goodsTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		goodsTxt.scrollFactor.set();
+		goodsTxt.borderSize = 1.25;
+		add(goodsTxt);
+
+		badsTxt = new FlxText(goodsTxt.x, goodsTxt.y + 20, 0, "", 20);
+		badsTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		badsTxt.scrollFactor.set();
+		badsTxt.borderSize = 1.25;
+		add(badsTxt);
+
+		shitsTxt = new FlxText(badsTxt.x, badsTxt.y + 20, 0, "", 20);
+		shitsTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		shitsTxt.scrollFactor.set();
+		shitsTxt.borderSize = 1.25;
+		add(shitsTxt);
+
+		comboTxt = new FlxText(shitsTxt.x, shitsTxt.y + 20, 0, "", 20);
+		comboTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		comboTxt.scrollFactor.set();
+		comboTxt.borderSize = 1.25;
+		add(comboTxt);
 
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
@@ -1370,6 +1433,12 @@ class PlayState extends MusicBeatState
 		doof.cameras = [camHUD];
 		laneunderlay.cameras = [camHUD];
 		laneunderlayOp.cameras = [camHUD];
+		perfectsTxt.cameras = [camHUD];
+		sicksTxt.cameras = [camHUD];
+		goodsTxt.cameras = [camHUD];
+		badsTxt.cameras = [camHUD];
+		shitsTxt.cameras = [camHUD];
+		comboTxt.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -3285,6 +3354,14 @@ class PlayState extends MusicBeatState
 				boyfriendIdleTime = 0;
 			}
 		}
+		if (ClientPrefs.stuff) {
+			perfectsTxt.text = 'Perfects: ' + perfects;
+			sicksTxt.text = 'Sicks: ' + sicks;
+			goodsTxt.text = 'Goods: ' + goods;
+			badsTxt.text = 'Bads: ' + bads;
+			shitsTxt.text = 'Shits: ' + shits;
+			comboTxt.text = 'Combo: ' + combo;
+		}
 
 		super.update(elapsed);
 
@@ -4432,6 +4509,84 @@ class PlayState extends MusicBeatState
 	public var showComboNum:Bool = true;
 	public var showRating:Bool = true;
 
+	function tweenPerfect():Void {
+		if(perfectTween != null) {
+			perfectTween.cancel();
+		}
+		perfectsTxt.scale.x = 1.03;
+		perfectsTxt.scale.y = 1.03;
+		perfectTween = FlxTween.tween(perfectsTxt.scale, {x: 1, y: 1}, 0.2, {
+			onComplete: function(twn:FlxTween) {
+				perfectTween = null;
+			}
+		});
+	}
+
+	function tweenSick():Void {
+		if(sickTween != null) {
+			sickTween.cancel();
+		}
+		sicksTxt.scale.x = 1.03;
+		sicksTxt.scale.y = 1.03;
+		sickTween = FlxTween.tween(sicksTxt.scale, {x: 1, y: 1}, 0.2, {
+			onComplete: function(twn:FlxTween) {
+				sickTween = null;
+			}
+		});
+	}
+
+	function tweenGood():Void {
+		if(goodTween != null) {
+			goodTween.cancel();
+		}
+		goodsTxt.scale.x = 1.03;
+		goodsTxt.scale.y = 1.03;
+		goodTween = FlxTween.tween(goodsTxt.scale, {x: 1, y: 1}, 0.2, {
+			onComplete: function(twn:FlxTween) {
+				goodTween = null;
+			}
+		});
+	}
+
+	function tweenBad():Void {
+		if(badTween != null) {
+			badTween.cancel();
+		}
+		badsTxt.scale.x = 1.03;
+		badsTxt.scale.y = 1.03;
+		badTween = FlxTween.tween(badsTxt.scale, {x: 1, y: 1}, 0.2, {
+			onComplete: function(twn:FlxTween) {
+				badTween = null;
+			}
+		});
+	}
+
+	function tweenShit():Void {
+		if(shitTween != null) {
+			shitTween.cancel();
+		}
+		shitsTxt.scale.x = 1.03;
+		shitsTxt.scale.y = 1.03;
+		shitTween = FlxTween.tween(shitsTxt.scale, {x: 1, y: 1}, 0.2, {
+			onComplete: function(twn:FlxTween) {
+				shitTween = null;
+			}
+		});
+	}
+
+	function tweenCombo():Void {
+		if(comboTween != null) {
+			comboTween.cancel();
+		}
+		comboTxt.scale.x = 1.03;
+		comboTxt.scale.y = 1.03;
+		comboTween = FlxTween.tween(comboTxt.scale, {x: 1, y: 1}, 0.2, {
+			onComplete: function(twn:FlxTween) {
+				comboTween = null;
+			}
+		});
+	}
+
 	private function popUpScore(note:Note = null):Void
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
@@ -4476,6 +4631,25 @@ class PlayState extends MusicBeatState
 		if(daRating.noteSplash && !note.noteSplashDisabled)
 		{
 			spawnNoteSplashOnNote(note);
+		}
+
+		if (!note.isSustainNote) {
+			if (daRating.perfect) {
+				tweenPerfect();
+				perfectColorTween = FlxTween.color(perfectsTxt, 0.25, 0xFF56d76d, FlxColor.WHITE);
+			} if (daRating.sick) {
+				tweenSick();
+				sickColorTween = FlxTween.color(sicksTxt, 0.25, 0xFF56d76d, FlxColor.WHITE);
+			} if (daRating.good) {
+				tweenGood();
+				goodColorTween = FlxTween.color(goodsTxt, 0.25, 0xFF56d76d, FlxColor.WHITE);
+			} if (daRating.bad) {
+				tweenBad();
+				badColorTween = FlxTween.color(badsTxt, 0.25, 0xFF56d76d, FlxColor.WHITE);
+			} if (daRating.shit) {
+				tweenShit();
+				shitColorTween = FlxTween.color(shitsTxt, 0.25, 0xFF56d76d, FlxColor.WHITE);
+			}
 		}
 
 		if(!practiceMode) {
@@ -4552,11 +4726,6 @@ class PlayState extends MusicBeatState
 		}
 		var daLoop:Int = 0;
 		var xThing:Float = 0;
-		if (showCombo)
-		{
-			if (combo >= 30)
-				insert(members.indexOf(strumLineNotes), comboSpr);
-		}
 		for (i in seperatedScore)
 		{
 			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
@@ -4583,6 +4752,12 @@ class PlayState extends MusicBeatState
 			numScore.velocity.y -= FlxG.random.int(140, 160);
 			numScore.velocity.x = FlxG.random.float(-5, 5);
 			numScore.visible = !ClientPrefs.hideHud;
+
+			if (showCombo)
+			{
+				if (combo >= 30)
+					insert(members.indexOf(strumLineNotes), comboSpr);
+			}
 
 			if(showComboNum)
 				insert(members.indexOf(strumLineNotes), numScore);
@@ -4619,7 +4794,7 @@ class PlayState extends MusicBeatState
 
 				rating.destroy();
 			},
-			startDelay: Conductor.crochet * 0.002
+			startDelay: Conductor.crochet * 0.001
 		});
 	}
 
@@ -5038,6 +5213,8 @@ class PlayState extends MusicBeatState
 			if (!note.isSustainNote)
 			{
 				combo += 1;
+				tweenCombo();
+				comboColorTween = FlxTween.color(comboTxt, 0.25, 0xFF56d76d, FlxColor.WHITE);
 				if(combo > 9999) combo = 9999;
 				popUpScore(note);
 				health += note.hitHealth * healthGain;
@@ -5587,10 +5764,13 @@ class PlayState extends MusicBeatState
 		var ret:Dynamic = callOnLuas('onRecalculateRating', [], false);
 		if(ret != FunkinLua.Function_Stop)
 		{
-			if(totalPlayed < 1) //Prevent divide by 0
+			if(totalPlayed < 1) { //Prevent divide by 0
+				scoreTxt.alpha = 0;
 				ratingName = '?';
+			}
 			else
 			{
+				scoreTxt.alpha = 1;
 				// Rating Percent
 				ratingPercent = Math.min(1, Math.max(0, totalNotesHit / totalPlayed));
 				//trace((totalNotesHit / totalPlayed) + ', Total: ' + totalPlayed + ', notes hit: ' + totalNotesHit);

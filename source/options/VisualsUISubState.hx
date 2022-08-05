@@ -70,6 +70,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('stuff',
+			'stuff',
+			'stuff',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Icon Bop:',
 			'Classic is Vanilla FnF icons bops, OS is OS Engine icons bops',
 			'iconbops',

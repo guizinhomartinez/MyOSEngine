@@ -23,6 +23,7 @@ class ClientPrefs {
 	public static var violence:Bool = true;
 	public static var camZooms:Bool = true;
 	public static var hideHud:Bool = false;
+	public static var stuff:Bool = true;
 	public static var hideWatermark:Bool = false;
 	public static var hideScoreText:Bool = false;
 	public static var noteOffset:Int = 0;
@@ -120,6 +121,7 @@ class ClientPrefs {
 		FlxG.save.data.noteSplashes = noteSplashes;
 		FlxG.save.data.lowQuality = lowQuality;
 		FlxG.save.data.framerate = framerate;
+		FlxG.save.data.stuff = stuff;
 		//FlxG.save.data.cursing = cursing;
 		//FlxG.save.data.violence = violence;
 		FlxG.save.data.camZooms = camZooms;
@@ -201,6 +203,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.opponentStrums != null) {
 			opponentStrums = FlxG.save.data.opponentStrums;
+		}
+		if (FlxG.save.data.stuff != null) {
+			stuff = FlxG.save.data.stuff;
 		}
 		if(FlxG.save.data.noteSplashes != null) {
 			noteSplashes = FlxG.save.data.noteSplashes;
