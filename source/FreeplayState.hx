@@ -482,7 +482,10 @@ class FreeplayState extends MusicBeatState
 			if (item.targetY == 0)
 			{
 				item.alpha = 1;
+				item.xAdd = 90;
 				// item.setGraphicSize(Std.int(item.width));
+			} else {
+				item.xAdd = 0;
 			}
 		}
 		

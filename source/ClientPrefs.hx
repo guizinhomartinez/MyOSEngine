@@ -48,6 +48,7 @@ class ClientPrefs {
 	public static var pauseMusic:String = 'Tea Time';
 	public static var showcaseMode:Bool = false;
 	public static var cameramoveonnotes:Bool = true;
+	public static var betterHealthSystem:Bool = true;
 	public static var removePerfects:Bool = false;
 	public static var characterTrail:Bool = false;
 	public static var checkForUpdates:Bool = true;
@@ -122,6 +123,7 @@ class ClientPrefs {
 		FlxG.save.data.lowQuality = lowQuality;
 		FlxG.save.data.framerate = framerate;
 		FlxG.save.data.stuff = stuff;
+		FlxG.save.data.betterHealthSystem = betterHealthSystem;
 		//FlxG.save.data.cursing = cursing;
 		//FlxG.save.data.violence = violence;
 		FlxG.save.data.camZooms = camZooms;
@@ -191,6 +193,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.flashing != null) {
 			flashing = FlxG.save.data.flashing;
+		}
+		if(FlxG.save.data.betterHealthSystem != null) {
+			betterHealthSystem = FlxG.save.data.betterHealthSystem;
 		}
 		if(FlxG.save.data.holdNoteVisibility != null) {
 			holdNoteVisibility = FlxG.save.data.holdNoteVisibility;

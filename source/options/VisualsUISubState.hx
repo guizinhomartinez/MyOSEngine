@@ -77,6 +77,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Better Health System',
+			'better health system',
+			'betterHealthSystem',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Icon Bop:',
 			'Classic is Vanilla FnF icons bops, OS is OS Engine icons bops',
 			'iconbops',
@@ -90,7 +97,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'scoreTxtType',
 			'string',
 			'New Score',
-			['New Score', 'Classic']);
+			['Cooler Score', 'New Score', 'Classic']);
 		addOption(option);
 
 		var option:Option = new Option('Colorblind Filter:',
